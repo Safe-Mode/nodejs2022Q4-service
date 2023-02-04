@@ -5,6 +5,8 @@ import { Track } from './tracks/models/track';
 import { CreateUserDto } from './users/dto/create-user.dto';
 import { User } from './users/models/user';
 
+type Entity = User | Artist | Track;
+
 export enum AppDbField {
   USERS = 'users',
   ARTISTS = 'artists',
@@ -17,12 +19,12 @@ export class AppDB {
   private artists: Artist[] = [];
   private tracks: Track[] = [];
 
-  getAll<Entity>(fieldName: string): Entity[] {
+  getAll(fieldName: AppDbField) {
     return this[fieldName];
   }
 
-  getById<Entity>(fieldName: string, id: string): Entity {
-    return this[fieldName].find((entity) => entity.id === id);
+  getById(fieldName: AppDbField, id: string) {
+    return (this[fieldName] as Entity[]).find(entity => entity.id === id);
   }
 
   createUser({ login, password }: CreateUserDto): User {
@@ -43,12 +45,12 @@ export class AppDB {
     return track;
   }
 
-  update<Entity>(
+  update(
     fieldName: AppDbField,
     id: string,
     data: Partial<Entity>,
   ): Entity {
-    const entity = this.getById<Entity>(fieldName, id);
+    const entity = this.getById(fieldName, id);
 
     if (entity) {
       for (let field in data) {

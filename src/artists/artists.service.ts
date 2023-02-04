@@ -8,11 +8,11 @@ export class ArtistsService {
   constructor(private db: AppDB) {}
 
   getAll(): Artist[] {
-    return this.db.getAll(AppDbField.ARTISTS);
+    return this.db.getAll(AppDbField.ARTISTS) as Artist[];
   }
 
   getById(uuid: string): Artist {
-    return this.db.getById(AppDbField.ARTISTS, uuid);
+    return this.db.getById(AppDbField.ARTISTS, uuid) as Artist;
   }
 
   create(data: CreateArtistDto): Artist {
@@ -20,7 +20,7 @@ export class ArtistsService {
   }
 
   update(uuid: string, data: Partial<CreateArtistDto>): Artist {
-    return this.db.update<Artist>(AppDbField.ARTISTS, uuid, data);
+    return this.db.update(AppDbField.ARTISTS, uuid, data) as Artist;
   }
 
   delete(uuid: string): void {

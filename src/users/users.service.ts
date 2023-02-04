@@ -9,11 +9,11 @@ export class UsersService {
   constructor(private db: AppDB) {}
 
   getAll(): User[] {
-    return this.db.getAll<User>(AppDbField.USERS);
+    return this.db.getAll(AppDbField.USERS) as User[];
   }
 
   getById(id: string): User {
-    return this.db.getById<User>(AppDbField.USERS, id);
+    return this.db.getById(AppDbField.USERS, id) as User;
   }
 
   create(data: CreateUserDto): User {
@@ -21,11 +21,11 @@ export class UsersService {
   }
 
   update(id: string, { oldPassword, newPassword }: UpdatePasswordDto): User {
-    const user = this.db.getById<User>(AppDbField.USERS, id);
+    const user = this.db.getById(AppDbField.USERS, id) as User;
 
     if (user) {
       if (user.password === oldPassword) {
-        this.db.update<User>(AppDbField.USERS, id, { password: newPassword });
+        this.db.update(AppDbField.USERS, id, { password: newPassword });
       } else {
         throw new ForbiddenException('Wrong password');
       }
