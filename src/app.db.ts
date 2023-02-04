@@ -1,16 +1,20 @@
 import { Injectable } from '@nestjs/common';
+import { CreateArtistDto } from './artists/dto/create-artist.dto';
+import { Artist } from './artists/models/artist';
 import { Track } from './tracks/models/track';
 import { CreateUserDto } from './users/dto/create-user.dto';
 import { User } from './users/models/user';
 
 export enum AppDbField {
-    USERS = 'users',
-    TRACKS = 'tracks'
+  USERS = 'users',
+  ARTISTS = 'artists',
+  TRACKS = 'tracks',
 }
 
 @Injectable()
 export class AppDB {
   private users: User[] = [];
+  private artists: Artist[] = [];
   private tracks: Track[] = [];
 
   getAll<Entity>(fieldName: string): Entity[] {
@@ -27,30 +31,32 @@ export class AppDB {
     return user;
   }
 
+  createArtist({ name, grammy }: CreateArtistDto): Artist {
+    const artist = new Artist(name, grammy);
+    this.artists.push(artist);
+    return artist;
+  }
+
   createTrack({ name, duration }: Partial<Track>): Track {
     const track = new Track(name, duration);
     this.tracks.push(track);
     return track;
   }
 
-  updateUser(id: string, data: Partial<User>): User {
-    const user = this.getById<User>('users', id);
+  update<Entity>(
+    fieldName: AppDbField,
+    id: string,
+    data: Partial<Entity>,
+  ): Entity {
+    const entity = this.getById<Entity>(fieldName, id);
 
-    for (let field in data) {
-      user[field] = data[field];
+    if (entity) {
+      for (let field in data) {
+        entity[field] = data[field];
+      }
     }
 
-    return user;
-  }
-
-  updateTrack(id: string, data: Partial<Track>): Track {
-    const track = this.getById<Track>('tracks', id);
-
-    for (let field in data) {
-      track[field] = data[field];
-    }
-
-    return track;
+    return entity;
   }
 
   delete(fieldName: string, id: string): void {

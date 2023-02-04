@@ -20,7 +20,7 @@ export class TracksService {
   }
 
   update(uuid: string, data: Partial<CreateTrackDto>): Track {
-    return this.db.updateTrack(uuid, data);
+    return this.db.update<Track>(AppDbField.TRACKS, uuid, data);
   }
 
   delete(uuid: string): void {

@@ -20,15 +20,12 @@ export class UsersService {
     return this.db.createUser(data);
   }
 
-  update(
-    id: string,
-    { oldPassword, newPassword }: UpdatePasswordDto,
-  ): User {
+  update(id: string, { oldPassword, newPassword }: UpdatePasswordDto): User {
     const user = this.db.getById<User>(AppDbField.USERS, id);
 
     if (user) {
       if (user.password === oldPassword) {
-        this.db.updateUser(id, { password: newPassword });
+        this.db.update<User>(AppDbField.USERS, id, { password: newPassword });
       } else {
         throw new ForbiddenException('Wrong password');
       }
