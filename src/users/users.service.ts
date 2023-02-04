@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { AppDB } from 'src/app.db';
+import { AppDB, AppDbField } from 'src/app.db';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { User } from './models/user';
@@ -8,23 +8,23 @@ import { User } from './models/user';
 export class UsersService {
   constructor(private db: AppDB) {}
 
-  getUsers(): User[] {
-    return this.db.getAll<User>('users');
+  getAll(): User[] {
+    return this.db.getAll<User>(AppDbField.USERS);
   }
 
   getById(id: string): User {
-    return this.db.getById<User>('users', id);
+    return this.db.getById<User>(AppDbField.USERS, id);
   }
 
-  createUser(data: CreateUserDto): User {
+  create(data: CreateUserDto): User {
     return this.db.createUser(data);
   }
 
-  updateById(
+  update(
     id: string,
     { oldPassword, newPassword }: UpdatePasswordDto,
   ): User {
-    const user = this.db.getById<User>('users', id);
+    const user = this.db.getById<User>(AppDbField.USERS, id);
 
     if (user) {
       if (user.password === oldPassword) {
@@ -37,7 +37,7 @@ export class UsersService {
     return user;
   }
 
-  deleteUser(id: string): void {
-    this.db.delete('users', id);
+  delete(id: string): void {
+    this.db.delete(AppDbField.USERS, id);
   }
 }

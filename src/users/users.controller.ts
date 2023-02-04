@@ -20,7 +20,7 @@ export class UsersController {
 
   @Get()
   getAll(): User[] {
-    return this.usersService.getUsers();
+    return this.usersService.getAll();
   }
 
   @Get(':id')
@@ -30,7 +30,7 @@ export class UsersController {
 
   @Post()
   create(@Body() createUserDto: CreateUserDto): User {
-    return this.usersService.createUser(createUserDto);
+    return this.usersService.create(createUserDto);
   }
 
   @Put(':id')
@@ -38,13 +38,13 @@ export class UsersController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body() data: UpdatePasswordDto,
   ): User {
-    return this.usersService.updateById(id, data);
+    return this.usersService.update(id, data);
   }
 
   @Delete(':id')
   @HttpCode(204)
   delete(@Param('id', ParseUUIDPipe) id: string): void {
-    this.usersService.deleteUser(id);
+    this.usersService.delete(id);
     return null;
   }
 }

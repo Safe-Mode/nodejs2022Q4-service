@@ -3,6 +3,11 @@ import { Track } from './tracks/models/track';
 import { CreateUserDto } from './users/dto/create-user.dto';
 import { User } from './users/models/user';
 
+export enum AppDbField {
+    USERS = 'users',
+    TRACKS = 'tracks'
+}
+
 @Injectable()
 export class AppDB {
   private users: User[] = [];

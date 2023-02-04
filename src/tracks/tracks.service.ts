@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AppDB } from 'src/app.db';
+import { AppDB, AppDbField } from 'src/app.db';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { Track } from './models/track';
 
@@ -8,11 +8,11 @@ export class TracksService {
   constructor(private db: AppDB) {}
 
   getAll(): Track[] {
-    return this.db.getAll('tracks');
+    return this.db.getAll(AppDbField.TRACKS);
   }
 
   getById(uuid: string): Track {
-    return this.db.getById('tracks', uuid);
+    return this.db.getById(AppDbField.TRACKS, uuid);
   }
 
   create(data: CreateTrackDto): Track {
@@ -24,6 +24,6 @@ export class TracksService {
   }
 
   delete(uuid: string): void {
-    this.db.delete('tracks', uuid);
+    this.db.delete(AppDbField.TRACKS, uuid);
   }
 }

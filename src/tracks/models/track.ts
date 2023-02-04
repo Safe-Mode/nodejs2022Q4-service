@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 export class Track {
-  readonly id: string; // uuid v4
+  readonly id: string;
 
   constructor(
     public readonly name: string,
