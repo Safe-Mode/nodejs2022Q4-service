@@ -11,6 +11,7 @@ import {
 import { HttpCode } from '@nestjs/common/decorators';
 import { ArtistsService } from './artists.service';
 import { CreateArtistDto } from './dto/create-artist.dto';
+import { UpdateArtistDto } from './dto/update-artist.dto';
 import { Artist } from './models/artist';
 
 @Controller('artist')
@@ -35,15 +36,14 @@ export class ArtistsController {
   @Put(':id')
   update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() updateArtistDto: Partial<CreateArtistDto>,
+    @Body() updateArtistDto: UpdateArtistDto,
   ): Artist {
     return this.artistsService.update(id, updateArtistDto);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  delete(@Param('id', ParseUUIDPipe) id: string): void {
-    this.artistsService.delete(id);
-    return null;
+  delete(@Param('id', ParseUUIDPipe) id: string): Artist {
+    return this.artistsService.delete(id);
   }
 }

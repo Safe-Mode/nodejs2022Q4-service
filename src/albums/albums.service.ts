@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AppDB, AppDbField } from 'src/app.db';
 import { CreateAlbumDto } from './dto/create-album.dto';
+import { UpdateAlbumDto } from './dto/update-album.dto';
 import { Album } from './models/album';
 
 @Injectable()
@@ -19,11 +20,11 @@ export class AlbumsService {
     return this.db.createAlbum(data);
   }
 
-  update(uuid: string, data: Partial<CreateAlbumDto>): Album {
+  update(uuid: string, data: UpdateAlbumDto): Album {
     return this.db.update(AppDbField.ALBUMS, uuid, data) as Album;
   }
 
-  delete(uuid: string): void {
-    this.db.delete(AppDbField.ALBUMS, uuid);
+  delete(uuid: string): Album {
+    return this.db.delete(AppDbField.ALBUMS, uuid) as Album;
   }
 }

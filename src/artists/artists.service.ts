@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AppDB, AppDbField } from 'src/app.db';
 import { CreateArtistDto } from './dto/create-artist.dto';
+import { UpdateArtistDto } from './dto/update-artist.dto';
 import { Artist } from './models/artist';
 
 @Injectable()
@@ -19,11 +20,11 @@ export class ArtistsService {
     return this.db.createArtist(data);
   }
 
-  update(uuid: string, data: Partial<CreateArtistDto>): Artist {
+  update(uuid: string, data: UpdateArtistDto): Artist {
     return this.db.update(AppDbField.ARTISTS, uuid, data) as Artist;
   }
 
-  delete(uuid: string): void {
-    this.db.delete(AppDbField.ARTISTS, uuid);
+  delete(uuid: string): Artist {
+    return this.db.delete(AppDbField.ARTISTS, uuid) as Artist;
   }
 }

@@ -23,7 +23,7 @@ export class TracksService {
     return this.db.update(AppDbField.TRACKS, uuid, data) as Track;
   }
 
-  delete(uuid: string): void {
-    this.db.delete(AppDbField.TRACKS, uuid);
+  delete(uuid: string): Track {
+    return this.db.delete(AppDbField.TRACKS, uuid) as Track;
   }
 }

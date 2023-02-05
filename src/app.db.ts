@@ -5,6 +5,7 @@ import { CreateArtistDto } from './artists/dto/create-artist.dto';
 import { Artist } from './artists/models/artist';
 import { Track } from './tracks/models/track';
 import { CreateUserDto } from './users/dto/create-user.dto';
+import { UserResponseDto } from './users/dto/user-response.dto';
 import { User } from './users/models/user';
 
 type Entity = User | Artist | Album | Track;
@@ -31,10 +32,14 @@ export class AppDB {
     return (this[fieldName] as Entity[]).find((entity) => entity.id === id);
   }
 
-  createUser({ login, password }: CreateUserDto): User {
+  createUser({ login, password }: CreateUserDto): UserResponseDto {
     const user = new User(login, password);
     this.users.push(user);
-    return user;
+
+    const userResponse = { ...user };
+    delete userResponse.password;
+
+    return userResponse;
   }
 
   createArtist({ name, grammy }: CreateArtistDto): Artist {
@@ -62,15 +67,20 @@ export class AppDB {
       for (let field in data) {
         entity[field] = data[field];
       }
+
+      if (entity instanceof User) {
+        entity.version++;
+        entity.updatedAt = Date.now();
+      }
     }
 
     return entity;
   }
 
-  delete(fieldName: AppDbField, id: string): void {
-    this[fieldName].splice(
-      this[fieldName].findIndex((entity) => entity.id === id),
-      1,
-    );
+  delete(fieldName: AppDbField, id: string): Entity {
+    const entityIndex = this[fieldName].findIndex((entity) => entity.id === id);
+    return entityIndex !== -1
+      ? this[fieldName].splice(entityIndex, 1)[0]
+      : undefined;
   }
 }

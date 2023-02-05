@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
+import { UserResponseDto } from './dto/user-response.dto';
 import { User } from './models/user';
 import { UsersService } from './users.service';
 
@@ -29,7 +30,7 @@ export class UsersController {
   }
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto): User {
+  create(@Body() createUserDto: CreateUserDto): UserResponseDto {
     return this.usersService.create(createUserDto);
   }
 
@@ -37,14 +38,13 @@ export class UsersController {
   updatePassword(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() data: UpdatePasswordDto,
-  ): User {
+  ): UserResponseDto {
     return this.usersService.update(id, data);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  delete(@Param('id', ParseUUIDPipe) id: string): void {
-    this.usersService.delete(id);
-    return null;
+  delete(@Param('id', ParseUUIDPipe) id: string): User {
+    return this.usersService.delete(id);
   }
 }
