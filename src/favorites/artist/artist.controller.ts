@@ -6,6 +6,7 @@ import {
   ParseUUIDPipe,
   Post,
 } from '@nestjs/common';
+import { NO_CONTENT_STATUS_CODE } from 'src/app.const';
 import { ArtistService } from './artist.service';
 
 @Controller('favs/artist')
@@ -18,7 +19,7 @@ export class ArtistController {
   }
 
   @Delete(':id')
-  @HttpCode(204)
+  @HttpCode(NO_CONTENT_STATUS_CODE)
   deleteFromFavorites(@Param('id', ParseUUIDPipe) id: string) {
     return this.artistService.deleteFromFavorites(id);
   }

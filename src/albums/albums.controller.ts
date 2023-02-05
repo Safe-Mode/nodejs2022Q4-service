@@ -9,6 +9,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { NO_CONTENT_STATUS_CODE } from 'src/app.const';
 import { AlbumsService } from './albums.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
@@ -42,7 +43,7 @@ export class AlbumsController {
   }
 
   @Delete(':id')
-  @HttpCode(204)
+  @HttpCode(NO_CONTENT_STATUS_CODE)
   delete(@Param('id', ParseUUIDPipe) id: string): Album {
     return this.albumsService.delete(id);
   }

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { NOT_FOUND_INDEX } from 'src/app.const';
 import { CreateTrackDto } from 'src/tracks/dto/create-track.dto';
 import { CreateAlbumDto } from '../albums/dto/create-album.dto';
 import { Album } from '../albums/models/album';
@@ -87,7 +88,7 @@ export class DbService {
 
   delete(fieldName: Exclude<AppDbField, AppDbField.FAVS>, id: string): Entity {
     const entityIndex = this[fieldName].findIndex((entity) => entity.id === id);
-    return entityIndex !== -1
+    return entityIndex !== NOT_FOUND_INDEX
       ? this[fieldName].splice(entityIndex, 1)[0]
       : undefined;
   }
@@ -102,7 +103,7 @@ export class DbService {
 
   deleteFromFavorites(fieldName: AppDbField, id: string) {
     const index = this.favorites[fieldName].indexOf(id);
-    return index !== -1
+    return index !== NOT_FOUND_INDEX
       ? this.favorites[fieldName].splice(index, 1)[0]
       : undefined;
   }

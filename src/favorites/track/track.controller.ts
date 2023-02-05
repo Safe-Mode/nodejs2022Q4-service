@@ -6,6 +6,7 @@ import {
   ParseUUIDPipe,
   Post,
 } from '@nestjs/common';
+import { NO_CONTENT_STATUS_CODE } from 'src/app.const';
 import { TrackService } from './track.service';
 
 @Controller('favs/track')
@@ -18,7 +19,7 @@ export class TrackController {
   }
 
   @Delete(':id')
-  @HttpCode(204)
+  @HttpCode(NO_CONTENT_STATUS_CODE)
   deleteFromFavorites(@Param('id', ParseUUIDPipe) id: string) {
     return this.trackService.deleteFromFavorites(id);
   }

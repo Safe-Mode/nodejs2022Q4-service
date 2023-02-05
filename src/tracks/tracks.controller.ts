@@ -9,6 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { HttpCode } from '@nestjs/common/decorators';
+import { NO_CONTENT_STATUS_CODE } from 'src/app.const';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
 import { Track } from './models/track';
@@ -42,7 +43,7 @@ export class TracksController {
   }
 
   @Delete(':id')
-  @HttpCode(204)
+  @HttpCode(NO_CONTENT_STATUS_CODE)
   delete(@Param('id', ParseUUIDPipe) id: string): Track {
     return this.tracksService.delete(id);
   }
