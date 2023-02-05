@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { CreateTrackDto } from 'src/tracks/dto/create-track.dto';
 import { CreateAlbumDto } from '../albums/dto/create-album.dto';
 import { Album } from '../albums/models/album';
 import { CreateArtistDto } from '../artists/dto/create-artist.dto';
@@ -16,7 +17,7 @@ export enum AppDbField {
   ARTISTS = 'artists',
   ALBUMS = 'albums',
   TRACKS = 'tracks',
-  FAVS = 'favorites'
+  FAVS = 'favorites',
 }
 
 @Injectable()
@@ -57,13 +58,17 @@ export class DbService {
     return album;
   }
 
-  createTrack({ name, duration }: Partial<Track>): Track {
-    const track = new Track(name, duration);
+  createTrack({ name, duration, artistId, albumId }: CreateTrackDto): Track {
+    const track = new Track(name, duration, artistId, albumId);
     this.tracks.push(track);
     return track;
   }
 
-  update(fieldName: Exclude<AppDbField, AppDbField.FAVS>, id: string, data: Partial<Entity>): Entity {
+  update(
+    fieldName: Exclude<AppDbField, AppDbField.FAVS>,
+    id: string,
+    data: Partial<Entity>,
+  ): Entity {
     const entity = this.getById(fieldName, id);
 
     if (entity) {
@@ -97,6 +102,8 @@ export class DbService {
 
   deleteFromFavorites(fieldName: AppDbField, id: string) {
     const index = this.favorites[fieldName].indexOf(id);
-    return index !== -1 ? this.favorites[fieldName].splice(index, 1)[0] : undefined;
+    return index !== -1
+      ? this.favorites[fieldName].splice(index, 1)[0]
+      : undefined;
   }
 }

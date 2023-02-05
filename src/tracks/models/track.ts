@@ -6,8 +6,8 @@ export class Track {
   constructor(
     public readonly name: string,
     public readonly duration: number,
-    public readonly artistId: string | null = null,
-    public readonly albumId: string | null = null,
+    public artistId: string | null = null,
+    public albumId: string | null = null,
     private uuid: typeof uuidv4 = uuidv4,
   ) {
     this.id = this.uuid();

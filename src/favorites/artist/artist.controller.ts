@@ -6,20 +6,20 @@ import {
   ParseUUIDPipe,
   Post,
 } from '@nestjs/common';
-import { TrackService } from './track.service';
+import { ArtistService } from './artist.service';
 
-@Controller('favs/track')
-export class TrackController {
-  constructor(private trackService: TrackService) {}
+@Controller('favs/artist')
+export class ArtistController {
+  constructor(private artistService: ArtistService) {}
 
   @Post(':id')
   addToFavorites(@Param('id', ParseUUIDPipe) id: string) {
-    return this.trackService.addToFavorites(id);
+    return this.artistService.addToFavorites(id);
   }
 
   @Delete(':id')
   @HttpCode(204)
   deleteFromFavorites(@Param('id', ParseUUIDPipe) id: string) {
-    return this.trackService.deleteFromFavorites(id);
+    return this.artistService.deleteFromFavorites(id);
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AppDbField, DbService } from 'src/db/db.service';
+import { Track } from 'src/tracks/models/track';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { Album } from './models/album';
@@ -25,6 +26,15 @@ export class AlbumsService {
   }
 
   delete(uuid: string): Album {
-    return this.db.delete(AppDbField.ALBUMS, uuid) as Album;
+    const album = this.db.delete(AppDbField.ALBUMS, uuid) as Album;
+
+    if (album) {
+      const relatedTrack = (this.db.getAll(AppDbField.TRACKS) as Track[]).find(
+        ({ albumId }) => albumId === uuid,
+      );
+      this.db.update(AppDbField.TRACKS, relatedTrack?.id, { albumId: null });
+    }
+
+    return album;
   }
 }
