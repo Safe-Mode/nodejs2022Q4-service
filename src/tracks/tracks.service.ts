@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { AppDB, AppDbField } from 'src/app.db';
+import { AppDbField, DbService } from 'src/db/db.service';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { Track } from './models/track';
 
 @Injectable()
 export class TracksService {
-  constructor(private db: AppDB) {}
+  constructor(private db: DbService) {}
 
   getAll(): Track[] {
     return this.db.getAll(AppDbField.TRACKS) as Track[];

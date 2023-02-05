@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { AppDB, AppDbField } from 'src/app.db';
+import { AppDbField, DbService } from 'src/db/db.service';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
 import { Artist } from './models/artist';
 
 @Injectable()
 export class ArtistsService {
-  constructor(private db: AppDB) {}
+  constructor(private db: DbService) {}
 
   getAll(): Artist[] {
     return this.db.getAll(AppDbField.ARTISTS) as Artist[];

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { AppDB, AppDbField } from 'src/app.db';
+import { AppDbField, DbService } from 'src/db/db.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { Album } from './models/album';
 
 @Injectable()
 export class AlbumsService {
-  constructor(private db: AppDB) {}
+  constructor(private db: DbService) {}
 
   getAll(): Album[] {
     return this.db.getAll(AppDbField.ALBUMS) as Album[];

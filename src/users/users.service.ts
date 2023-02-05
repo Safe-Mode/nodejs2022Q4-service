@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { AppDB, AppDbField } from 'src/app.db';
+import { AppDbField, DbService } from 'src/db/db.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { UserResponseDto } from './dto/user-response.dto';
@@ -7,7 +7,7 @@ import { User } from './models/user';
 
 @Injectable()
 export class UsersService {
-  constructor(private db: AppDB) {}
+  constructor(private db: DbService) {}
 
   getAll(): User[] {
     return this.db.getAll(AppDbField.USERS) as User[];
