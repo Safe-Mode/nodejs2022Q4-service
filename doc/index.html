@@ -1,0 +1,1754 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Home Library Service</title>
+    <style type="text/css">
+      body {
+      	font-family: Trebuchet MS, sans-serif;
+      	font-size: 15px;
+      	color: #444;
+      	margin-right: 24px;
+      }
+      
+      h1	{
+      	font-size: 25px;
+      }
+      h2	{
+      	font-size: 20px;
+      }
+      h3	{
+      	font-size: 16px;
+      	font-weight: bold;
+      }
+      hr	{
+      	height: 1px;
+      	border: 0;
+      	color: #ddd;
+      	background-color: #ddd;
+      }
+      
+      .app-desc {
+        clear: both;
+        margin-left: 20px;
+      }
+      .param-name {
+        width: 100%;
+      }
+      .license-info {
+        margin-left: 20px;
+      }
+      
+      .license-url {
+        margin-left: 20px;
+      }
+      
+      .model {
+        margin: 0 0 0px 20px;
+      }
+      
+      .method {
+        margin-left: 20px;
+      }
+      
+      .method-notes	{
+      	margin: 10px 0 20px 0;
+      	font-size: 90%;
+      	color: #555;
+      }
+      
+      pre {
+        padding: 10px;
+        margin-bottom: 2px;
+      }
+      
+      .http-method {
+       text-transform: uppercase;
+      }
+      
+      pre.get {
+        background-color: #0f6ab4;
+      }
+      
+      pre.post {
+        background-color: #10a54a;
+      }
+      
+      pre.put {
+        background-color: #c5862b;
+      }
+      
+      pre.delete {
+        background-color: #a41e22;
+      }
+      
+      .huge	{
+      	color: #fff;
+      }
+      
+      pre.example {
+        background-color: #f3f3f3;
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+      
+      code {
+        white-space: pre;
+      }
+      
+      .nickname {
+        font-weight: bold;
+      }
+      
+      .method-path {
+        font-size: 1.5em;
+        background-color: #0f6ab4;
+      }
+      
+      .up {
+        float:right;
+      }
+      
+      .parameter {
+        width: 500px;
+      }
+      
+      .param {
+        width: 500px;
+        padding: 10px 0 0 20px;
+        font-weight: bold;
+      }
+      
+      .param-desc {
+        width: 700px;
+        padding: 0 0 0 20px;
+        color: #777;
+      }
+      
+      .param-type {
+        font-style: italic;
+      }
+      
+      .param-enum-header {
+      width: 700px;
+      padding: 0 0 0 60px;
+      color: #777;
+      font-weight: bold;
+      }
+      
+      .param-enum {
+      width: 700px;
+      padding: 0 0 0 80px;
+      color: #777;
+      font-style: italic;
+      }
+      
+      .field-label {
+        padding: 0;
+        margin: 0;
+        clear: both;
+      }
+      
+      .field-items	{
+      	padding: 0 0 15px 0;
+      	margin-bottom: 15px;
+      }
+      
+      .return-type {
+        clear: both;
+        padding-bottom: 10px;
+      }
+      
+      .param-header {
+        font-weight: bold;
+      }
+      
+      .method-tags {
+        text-align: right;
+      }
+      
+      .method-tag {
+        background: none repeat scroll 0% 0% #24A600;
+        border-radius: 3px;
+        padding: 2px 10px;
+        margin: 2px;
+        color: #FFF;
+        display: inline-block;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+  <h1>Home Library Service</h1>
+    <div class="app-desc">Home music library service</div>
+    <div class="app-desc">More information: <a href="https://helloreverb.com">https://helloreverb.com</a></div>
+    <div class="app-desc">Contact Info: <a href="hello@helloreverb.com">hello@helloreverb.com</a></div>
+    <div class="app-desc">Version: 1.0.0</div>
+    
+    <div class="license-info">All rights reserved</div>
+    <div class="license-url">http://apache.org/licenses/LICENSE-2.0.html</div>
+  <h2>Access</h2>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#Album">Album</a></h4>
+  <ul>
+  <li><a href="#albumGet"><code><span class="http-method">get</span> /album</code></a></li>
+  <li><a href="#albumIdDelete"><code><span class="http-method">delete</span> /album/{id}</code></a></li>
+  <li><a href="#albumIdGet"><code><span class="http-method">get</span> /album/{id}</code></a></li>
+  <li><a href="#albumIdPut"><code><span class="http-method">put</span> /album/{id}</code></a></li>
+  <li><a href="#albumPost"><code><span class="http-method">post</span> /album</code></a></li>
+  </ul>
+  <h4><a href="#Artist">Artist</a></h4>
+  <ul>
+  <li><a href="#artistGet"><code><span class="http-method">get</span> /artist</code></a></li>
+  <li><a href="#artistIdDelete"><code><span class="http-method">delete</span> /artist/{id}</code></a></li>
+  <li><a href="#artistIdGet"><code><span class="http-method">get</span> /artist/{id}</code></a></li>
+  <li><a href="#artistIdPut"><code><span class="http-method">put</span> /artist/{id}</code></a></li>
+  <li><a href="#artistPost"><code><span class="http-method">post</span> /artist</code></a></li>
+  </ul>
+  <h4><a href="#Favorites">Favorites</a></h4>
+  <ul>
+  <li><a href="#favsAlbumIdDelete"><code><span class="http-method">delete</span> /favs/album/{id}</code></a></li>
+  <li><a href="#favsAlbumIdPost"><code><span class="http-method">post</span> /favs/album/{id}</code></a></li>
+  <li><a href="#favsArtistIdDelete"><code><span class="http-method">delete</span> /favs/artist/{id}</code></a></li>
+  <li><a href="#favsArtistIdPost"><code><span class="http-method">post</span> /favs/artist/{id}</code></a></li>
+  <li><a href="#favsGet"><code><span class="http-method">get</span> /favs</code></a></li>
+  <li><a href="#favsTrackIdDelete"><code><span class="http-method">delete</span> /favs/track/{id}</code></a></li>
+  <li><a href="#favsTrackIdPost"><code><span class="http-method">post</span> /favs/track/{id}</code></a></li>
+  </ul>
+  <h4><a href="#Track">Track</a></h4>
+  <ul>
+  <li><a href="#trackGet"><code><span class="http-method">get</span> /track</code></a></li>
+  <li><a href="#trackIdDelete"><code><span class="http-method">delete</span> /track/{id}</code></a></li>
+  <li><a href="#trackIdGet"><code><span class="http-method">get</span> /track/{id}</code></a></li>
+  <li><a href="#trackIdPut"><code><span class="http-method">put</span> /track/{id}</code></a></li>
+  <li><a href="#trackPost"><code><span class="http-method">post</span> /track</code></a></li>
+  </ul>
+  <h4><a href="#Users">Users</a></h4>
+  <ul>
+  <li><a href="#userGet"><code><span class="http-method">get</span> /user</code></a></li>
+  <li><a href="#userPost"><code><span class="http-method">post</span> /user</code></a></li>
+  <li><a href="#userUserIdDelete"><code><span class="http-method">delete</span> /user/{userId}</code></a></li>
+  <li><a href="#userUserIdGet"><code><span class="http-method">get</span> /user/{userId}</code></a></li>
+  <li><a href="#userUserIdPut"><code><span class="http-method">put</span> /user/{userId}</code></a></li>
+  </ul>
+
+  <h1><a name="Album">Album</a></h1>
+  <div class="method"><a name="albumGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /album</code></pre></div>
+    <div class="method-summary">Get albums list (<span class="nickname">albumGet</span>)</div>
+    <div class="method-notes">Gets all library alibums list</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Album">Album</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "year" : 1991,
+  "name" : "Innuendo",
+  "artistId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}, {
+  "year" : 1991,
+  "name" : "Innuendo",
+  "artistId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="albumIdDelete"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /album/{id}</code></pre></div>
+    <div class="method-summary">Delete album (<span class="nickname">albumIdDelete</span>)</div>
+    <div class="method-notes">Delete album from library</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: uuid</div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    Deleted succesfully
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Bad request. albumId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Album was not found.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="albumIdGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /album/{id}</code></pre></div>
+    <div class="method-summary">Get single album by id (<span class="nickname">albumIdGet</span>)</div>
+    <div class="method-notes">Gets single album by id</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: uuid</div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Album">Album</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "year" : 1991,
+  "name" : "Innuendo",
+  "artistId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#Album">Album</a>
+    <h4 class="field-label">400</h4>
+    Bad request. albumId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Album was not found.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="albumIdPut"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /album/{id}</code></pre></div>
+    <div class="method-summary">Update album information (<span class="nickname">albumIdPut</span>)</div>
+    <div class="method-notes">Update library album information by UUID</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: uuid</div>    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#example_6">example_6</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Album">Album</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "year" : 1991,
+  "name" : "Innuendo",
+  "artistId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    The album has been updated.
+        <a href="#Album">Album</a>
+    <h4 class="field-label">400</h4>
+    Bad request. albumId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Album was not found.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="albumPost"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /album</code></pre></div>
+    <div class="method-summary">Add new album (<span class="nickname">albumPost</span>)</div>
+    <div class="method-notes">Add new album information</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#example_5">example_5</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Album">Album</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "year" : 1991,
+  "name" : "Innuendo",
+  "artistId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Almub is created
+        <a href="#Album">Album</a>
+    <h4 class="field-label">400</h4>
+    Bad request. body does not contain required fields
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Artist">Artist</a></h1>
+  <div class="method"><a name="artistGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /artist</code></pre></div>
+    <div class="method-summary">Get all artists (<span class="nickname">artistGet</span>)</div>
+    <div class="method-notes">Gets all artists</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Artist">Artist</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "grammy" : false,
+  "name" : "Freddie Mercury",
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}, {
+  "grammy" : false,
+  "name" : "Freddie Mercury",
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="artistIdDelete"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /artist/{id}</code></pre></div>
+    <div class="method-summary">Delete artist (<span class="nickname">artistIdDelete</span>)</div>
+    <div class="method-notes">Delete artist from library</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: uuid</div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    Delelted succesfully
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Bad request. artistId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Artist was not found.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="artistIdGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /artist/{id}</code></pre></div>
+    <div class="method-summary">Get single artist by id (<span class="nickname">artistIdGet</span>)</div>
+    <div class="method-notes">Get single artist by id</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: uuid</div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Artist">Artist</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "grammy" : false,
+  "name" : "Freddie Mercury",
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#Artist">Artist</a>
+    <h4 class="field-label">400</h4>
+    Bad request. artistId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Artist was not found.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="artistIdPut"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /artist/{id}</code></pre></div>
+    <div class="method-summary">Update artist information (<span class="nickname">artistIdPut</span>)</div>
+    <div class="method-notes">Update artist information by UUID</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: uuid</div>    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#artist_id_body">artist_id_body</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Artist">Artist</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "grammy" : false,
+  "name" : "Freddie Mercury",
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    The artist has been updated.
+        <a href="#Artist">Artist</a>
+    <h4 class="field-label">400</h4>
+    Bad request. artistId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Artist was not found.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="artistPost"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /artist</code></pre></div>
+    <div class="method-summary">Add new artist (<span class="nickname">artistPost</span>)</div>
+    <div class="method-notes">Add new artist</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#artist_body">artist_body</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Artist">Artist</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "grammy" : false,
+  "name" : "Freddie Mercury",
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Successful operation
+        <a href="#Artist">Artist</a>
+    <h4 class="field-label">400</h4>
+    Bad request. body does not contain required fields
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Favorites">Favorites</a></h1>
+  <div class="method"><a name="favsAlbumIdDelete"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /favs/album/{id}</code></pre></div>
+    <div class="method-summary">Delete album from favorites (<span class="nickname">favsAlbumIdDelete</span>)</div>
+    <div class="method-notes">Delete album from favorites</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: uuid</div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    Deleted succesfully
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Bad. albumId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Album was not found.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="favsAlbumIdPost"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /favs/album/{id}</code></pre></div>
+    <div class="method-summary">Add album to the favorites (<span class="nickname">favsAlbumIdPost</span>)</div>
+    <div class="method-notes">Add album to the favorites</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: uuid</div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Added succesfully
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Bad. albumId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Album with id doesn&#x27;t exist.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="favsArtistIdDelete"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /favs/artist/{id}</code></pre></div>
+    <div class="method-summary">Delete artist from favorites (<span class="nickname">favsArtistIdDelete</span>)</div>
+    <div class="method-notes">Delete artist from favorites</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: uuid</div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    Deleted succesfully
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Bad request. artistId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Artist was not found.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="favsArtistIdPost"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /favs/artist/{id}</code></pre></div>
+    <div class="method-summary">Add artist to the favorites (<span class="nickname">favsArtistIdPost</span>)</div>
+    <div class="method-notes">Add artist to the favorites</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: uuid</div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Added succesfully
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Bad request. artistId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Artist with id doesn&#x27;t exist.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="favsGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /favs</code></pre></div>
+    <div class="method-summary">Get all favorites (<span class="nickname">favsGet</span>)</div>
+    <div class="method-notes">Gets all favorites movies, tracks and books</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Favorites">Favorites</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "albums" : [ {
+    "year" : 1991,
+    "name" : "Innuendo",
+    "artistId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  }, {
+    "year" : 1991,
+    "name" : "Innuendo",
+    "artistId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  } ],
+  "artists" : [ {
+    "grammy" : false,
+    "name" : "Freddie Mercury",
+    "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  }, {
+    "grammy" : false,
+    "name" : "Freddie Mercury",
+    "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  } ],
+  "tracks" : [ {
+    "duration" : 262,
+    "name" : "The Show Must Go On",
+    "albumId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "artistId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  }, {
+    "duration" : 262,
+    "name" : "The Show Must Go On",
+    "albumId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "artistId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#Favorites">Favorites</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="favsTrackIdDelete"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /favs/track/{id}</code></pre></div>
+    <div class="method-summary">Delete track from favorites (<span class="nickname">favsTrackIdDelete</span>)</div>
+    <div class="method-notes">Delete track from favorites</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: uuid</div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    Deleted succesfully
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Bad. trackId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Track was not found.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="favsTrackIdPost"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /favs/track/{id}</code></pre></div>
+    <div class="method-summary">Add track to the favorites (<span class="nickname">favsTrackIdPost</span>)</div>
+    <div class="method-notes">Add track to the favorites</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: uuid</div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Added succesfully
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Bad. trackId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Track with id doesn&#x27;t exist.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Track">Track</a></h1>
+  <div class="method"><a name="trackGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /track</code></pre></div>
+    <div class="method-summary">Get tracks list (<span class="nickname">trackGet</span>)</div>
+    <div class="method-notes">Gets all library tracks list</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Track">Track</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "duration" : 262,
+  "name" : "The Show Must Go On",
+  "albumId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "artistId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}, {
+  "duration" : 262,
+  "name" : "The Show Must Go On",
+  "albumId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "artistId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="trackIdDelete"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /track/{id}</code></pre></div>
+    <div class="method-summary">Delete track (<span class="nickname">trackIdDelete</span>)</div>
+    <div class="method-notes">Delete track from library</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: uuid</div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    Delelted succesfully
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Bad request. trackId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Track was not found.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="trackIdGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /track/{id}</code></pre></div>
+    <div class="method-summary">Get single track by id (<span class="nickname">trackIdGet</span>)</div>
+    <div class="method-notes">Gets single track by id</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: uuid</div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Track">Track</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "duration" : 262,
+  "name" : "The Show Must Go On",
+  "albumId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "artistId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#Track">Track</a>
+    <h4 class="field-label">400</h4>
+    Bad request. trackId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Track was not found.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="trackIdPut"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /track/{id}</code></pre></div>
+    <div class="method-summary">Update track information (<span class="nickname">trackIdPut</span>)</div>
+    <div class="method-notes">Update library track information by UUID</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: uuid</div>    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#example_3">example_3</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#example_4">example_4</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "duration" : 355,
+  "name" : "Bohemian Rhapsody",
+  "albumId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "artistId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    The track has been updated.
+        <a href="#example_4">example_4</a>
+    <h4 class="field-label">400</h4>
+    Bad request. trackId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Track was not found.
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="trackPost"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /track</code></pre></div>
+    <div class="method-summary">Add new track (<span class="nickname">trackPost</span>)</div>
+    <div class="method-notes">Add new track information</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#track_body">track_body</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Track">Track</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "duration" : 262,
+  "name" : "The Show Must Go On",
+  "albumId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "artistId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Successful operation
+        <a href="#Track">Track</a>
+    <h4 class="field-label">400</h4>
+    Bad request. body does not contain required fields
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Users">Users</a></h1>
+  <div class="method"><a name="userGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /user</code></pre></div>
+    <div class="method-summary">Get all users (<span class="nickname">userGet</span>)</div>
+    <div class="method-notes">Gets all users</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#User">User</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "updateAt" : 1655000000,
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "login" : "TestUser",
+  "version" : 1,
+  "createAt" : 1655000000
+}, {
+  "updateAt" : 1655000000,
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "login" : "TestUser",
+  "version" : 1,
+  "createAt" : 1655000000
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="userPost"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /user</code></pre></div>
+    <div class="method-summary">Create user (<span class="nickname">userPost</span>)</div>
+    <div class="method-notes">Creates a new user</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#example">example</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#User">User</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "updateAt" : 1655000000,
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "login" : "TestUser",
+  "version" : 1,
+  "createAt" : 1655000000
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    The user has been created.
+        <a href="#User">User</a>
+    <h4 class="field-label">400</h4>
+    Bad request. body does not contain required fields
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="userUserIdDelete"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /user/{userId}</code></pre></div>
+    <div class="method-summary">Delete user (<span class="nickname">userUserIdDelete</span>)</div>
+    <div class="method-notes">Deletes user by ID.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    The user has been deleted
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Bad request. userId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    User not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="userUserIdGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /user/{userId}</code></pre></div>
+    <div class="method-summary">Get single user by id (<span class="nickname">userUserIdGet</span>)</div>
+    <div class="method-notes">Get single user by id</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#User">User</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "updateAt" : 1655000000,
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "login" : "TestUser",
+  "version" : 1,
+  "createAt" : 1655000000
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#User">User</a>
+    <h4 class="field-label">400</h4>
+    Bad request. userId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    User not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="userUserIdPut"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /user/{userId}</code></pre></div>
+    <div class="method-summary">Update a user's password (<span class="nickname">userUserIdPut</span>)</div>
+    <div class="method-notes">Updates a user's password by ID</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userId (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#example_1">example_1</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#example_2">example_2</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "updateAt" : 1655999999,
+  "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "login" : "TestUser",
+  "version" : 2,
+  "createAt" : 1655000000
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    The user has been updated.
+        <a href="#example_2">example_2</a>
+    <h4 class="field-label">400</h4>
+    Bad request. userId is invalid (not uuid)
+        <a href="#"></a>
+    <h4 class="field-label">403</h4>
+    oldPassowrd is wrong
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    User not found
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#Album"><code>Album</code></a></li>
+    <li><a href="#Artist"><code>Artist</code></a></li>
+    <li><a href="#Favorites"><code>Favorites</code></a></li>
+    <li><a href="#Track"><code>Track</code></a></li>
+    <li><a href="#User"><code>User</code></a></li>
+    <li><a href="#artist_body"><code>artist_body</code></a></li>
+    <li><a href="#artist_id_body"><code>artist_id_body</code></a></li>
+    <li><a href="#example"><code>example</code> - example</a></li>
+    <li><a href="#example_1"><code>example_1</code> - example</a></li>
+    <li><a href="#example_2"><code>example_2</code> - example</a></li>
+    <li><a href="#example_3"><code>example_3</code> - example</a></li>
+    <li><a href="#example_4"><code>example_4</code> - example</a></li>
+    <li><a href="#example_5"><code>example_5</code> - example</a></li>
+    <li><a href="#example_6"><code>example_6</code> - example</a></li>
+    <li><a href="#track_body"><code>track_body</code></a></li>
+  </ol>
+
+  <div class="model">
+    <h3><a name="Album"><code>Album</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Innuendo</span></div>
+<div class="param">year (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 1991</span></div>
+<div class="param">artistId (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Artist"><code>Artist</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Freddie Mercury</span></div>
+<div class="param">grammy (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: false</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Favorites"><code>Favorites</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">artists (optional)</div><div class="param-desc"><span class="param-type"><a href="#Artist">array[Artist]</a></span>  </div>
+<div class="param">albums (optional)</div><div class="param-desc"><span class="param-type"><a href="#Album">array[Album]</a></span>  </div>
+<div class="param">tracks (optional)</div><div class="param-desc"><span class="param-type"><a href="#Track">array[Track]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Track"><code>Track</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: The Show Must Go On</span></div>
+<div class="param">artistId (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">albumId (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">duration </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> In seconds </div>
+          <div class="param-desc"><span class="param-type">example: 262</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="User"><code>User</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">login </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: TestUser</span></div>
+<div class="param">version (optional)</div><div class="param-desc"><span class="param-type"><a href="#BigDecimal">BigDecimal</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">createAt (optional)</div><div class="param-desc"><span class="param-type"><a href="#BigDecimal">BigDecimal</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 1655000000</span></div>
+<div class="param">updateAt (optional)</div><div class="param-desc"><span class="param-type"><a href="#BigDecimal">BigDecimal</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 1655000000</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="artist_body"><code>artist_body</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">grammy </div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="artist_id_body"><code>artist_id_body</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">grammy </div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="example"><code>example</code> - example</a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">login </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The user&#x27;s login </div>
+<div class="param">password </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The user&#x27;s password </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="example_1"><code>example_1</code> - example</a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">oldPassword </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The user&#x27;s old password </div>
+<div class="param">newPassword </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The user&#x27;s new password </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="example_2"><code>example_2</code> - example</a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">login (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: TestUser</span></div>
+<div class="param">version (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 2</span></div>
+<div class="param">createAt (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 1655000000</span></div>
+<div class="param">updateAt (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 1655999999</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="example_3"><code>example_3</code> - example</a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Bohemian Rhapsody</span></div>
+<div class="param">artistId (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">duration </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> In seconds </div>
+          <div class="param-desc"><span class="param-type">example: 355</span></div>
+<div class="param">albumId (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="example_4"><code>example_4</code> - example</a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Bohemian Rhapsody</span></div>
+<div class="param">artistId (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">duration (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> In seconds </div>
+          <div class="param-desc"><span class="param-type">example: 355</span></div>
+<div class="param">albumId (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="example_5"><code>example_5</code> - example</a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">year </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">artistId (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="example_6"><code>example_6</code> - example</a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">year </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">artistId (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="track_body"><code>track_body</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">artistId (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">albumId (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">duration </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> In seconds </div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>

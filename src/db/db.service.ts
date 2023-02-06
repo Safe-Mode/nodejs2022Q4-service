@@ -73,7 +73,7 @@ export class DbService {
     const entity = this.getById(fieldName, id);
 
     if (entity) {
-      for (let field in data) {
+      for (const field in data) {
         entity[field] = data[field];
       }
 
