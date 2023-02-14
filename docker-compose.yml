@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+    ports:
+      - 4000:4000
+      - 9229:9229
+    environment:
+      - SERVER_PORT=4000
+      - CONNECTIONSTRING=postgres://db:4001
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    networks:
+      - back-tier
+    command: npm run start:prod
+
+  db:
+    image: postgres
+    restart: always
+    env_file:
+      - db.env
+    ports:
+      - 4001:5432
+    volumes:
+      - postgres:/data/db
+      - postgres:/data/configdb
+    networks:
+      - back-tier
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - back-tier
+
+networks:
+  back-tier:
+
+volumes:
+  postgres:
+  postgres_config:
