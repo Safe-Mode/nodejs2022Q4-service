@@ -1,0 +1,50 @@
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { NO_CONTENT_STATUS_CODE } from 'src/app.const';
+import { AlbumsService } from './albums.service';
+import { CreateAlbumDto } from './dto/create-album.dto';
+import { UpdateAlbumDto } from './dto/update-album.dto';
+import { Album } from './models/album';
+
+@Controller('album')
+export class AlbumsController {
+  constructor(private albumsService: AlbumsService) {}
+
+  @Get()
+  getAll(): Album[] {
+    return this.albumsService.getAll();
+  }
+
+  @Get(':id')
+  getById(@Param('id', ParseUUIDPipe) id: string): Album {
+    return this.albumsService.getById(id);
+  }
+
+  @Post()
+  create(@Body() createAlbumDto: CreateAlbumDto): Album {
+    return this.albumsService.create(createAlbumDto);
+  }
+
+  @Put(':id')
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateAlbumDto: UpdateAlbumDto,
+  ): Album {
+    return this.albumsService.update(id, updateAlbumDto);
+  }
+
+  @Delete(':id')
+  @HttpCode(NO_CONTENT_STATUS_CODE)
+  delete(@Param('id', ParseUUIDPipe) id: string): Album {
+    return this.albumsService.delete(id);
+  }
+}
