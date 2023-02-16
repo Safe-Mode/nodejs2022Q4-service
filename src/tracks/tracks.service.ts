@@ -1,29 +1,36 @@
 import { Injectable } from '@nestjs/common';
-import { AppDbField, DbService } from 'src/db/db.service';
+import { Track } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateTrackDto } from './dto/create-track.dto';
-import { Track } from './models/track';
 
 @Injectable()
 export class TracksService {
-  constructor(private db: DbService) {}
+  constructor(private prisma: PrismaService) {}
 
-  getAll(): Track[] {
-    return this.db.getAll(AppDbField.TRACKS) as Track[];
+  getAll(): Promise<Track[]> {
+    return this.prisma.track.findMany();
   }
 
-  getById(uuid: string): Track {
-    return this.db.getById(AppDbField.TRACKS, uuid) as Track;
+  getById(uuid: string): Promise<Track> {
+    return this.prisma.track.findUnique({
+      where: { id: uuid }
+    });
   }
 
-  create(data: CreateTrackDto): Track {
-    return this.db.createTrack(data);
+  create(data: CreateTrackDto): Promise<Track> {
+    return this.prisma.track.create({ data });
   }
 
-  update(uuid: string, data: Partial<CreateTrackDto>): Track {
-    return this.db.update(AppDbField.TRACKS, uuid, data) as Track;
+  update(uuid: string, data: Partial<CreateTrackDto>): Promise<Track> {
+    return this.prisma.track.update({
+      where: { id: uuid },
+      data
+    });
   }
 
-  delete(uuid: string): Track {
-    return this.db.delete(AppDbField.TRACKS, uuid) as Track;
+  delete(uuid: string): Promise<Track> {
+    return this.prisma.track.delete({
+      where: { id: uuid }
+    });
   }
 }

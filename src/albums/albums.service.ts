@@ -1,38 +1,44 @@
 import { Injectable } from '@nestjs/common';
-import { AppDbField, DbService } from 'src/db/db.service';
-import { Track } from 'src/tracks/models/track';
+import { Album } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
-import { Album } from './models/album';
 
 @Injectable()
 export class AlbumsService {
-  constructor(private db: DbService) {}
+  constructor(private prisma: PrismaService) {}
 
-  getAll(): Album[] {
-    return this.db.getAll(AppDbField.ALBUMS) as Album[];
+  getAll(): Promise<Album[]> {
+    return this.prisma.album.findMany();
   }
 
-  getById(uuid: string): Album {
-    return this.db.getById(AppDbField.ALBUMS, uuid) as Album;
+  getById(uuid: string): Promise<Album> {
+    return this.prisma.album.findUnique({
+      where: { id: uuid }
+    });
   }
 
-  create(data: CreateAlbumDto): Album {
-    return this.db.createAlbum(data);
+  create(data: CreateAlbumDto): Promise<Album> {
+    return this.prisma.album.create({ data });
   }
 
-  update(uuid: string, data: UpdateAlbumDto): Album {
-    return this.db.update(AppDbField.ALBUMS, uuid, data) as Album;
+  update(uuid: string, data: UpdateAlbumDto): Promise<Album> {
+    return this.prisma.album.update({
+      where: { id: uuid },
+      data
+    });
   }
 
-  delete(uuid: string): Album {
-    const album = this.db.delete(AppDbField.ALBUMS, uuid) as Album;
+  async delete(uuid: string): Promise<Album> {
+    const album = await this.prisma.album.delete({
+      where: { id: uuid }
+    });
 
     if (album) {
-      const relatedTrack = (this.db.getAll(AppDbField.TRACKS) as Track[]).find(
-        ({ albumId }) => albumId === uuid,
-      );
-      this.db.update(AppDbField.TRACKS, relatedTrack?.id, { albumId: null });
+      this.prisma.track.updateMany({
+        where: { albumId: album.id },
+        data: { albumId: null }
+      });
     }
 
     return album;
