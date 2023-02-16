@@ -31,7 +31,7 @@ model Album {
   id       String @id @default(uuid())
   name     String
   year     Int
-  artistId String
+  artistId String?
 }
 
 model Artist {
