@@ -16,33 +16,45 @@ model User {
   password  String
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
-  version   Int       @default(autoincrement())
+  version   Int       @default(1)
 }
 
 model Track {
-  id       String @id @default(uuid())
-  name     String
-  duration Int
-  artistId String?
-  albumId  String?
+  id          String     @id @default(uuid())
+  name        String
+  duration    Int
+  artist      Artist?    @relation(fields: [artistId], references: [id], onDelete: SetNull)
+  artistId    String?
+  album       Album?     @relation(fields: [albumId], references: [id], onDelete: SetNull)
+  albumId     String?
+  favorites   Favorites? @relation(fields: [favoritesId], references: [id], onDelete: SetNull)
+  favoritesId String?
 }
 
 model Album {
-  id       String @id @default(uuid())
-  name     String
-  year     Int
-  artistId String?
+  id          String     @id @default(uuid())
+  name        String
+  year        Int
+  artist      Artist?    @relation(fields: [artistId], references: [id], onDelete: SetNull)
+  artistId    String?
+  favorites   Favorites? @relation(fields: [favoritesId], references: [id], onDelete: SetNull)
+  favoritesId String?
+  Track       Track[]
 }
 
 model Artist {
-  id     String  @id @default(uuid())
-  name   String
-  grammy Boolean
+  id          String     @id @default(uuid())
+  name        String
+  grammy      Boolean
+  favorites   Favorites? @relation(fields: [favoritesId], references: [id], onDelete: SetNull)
+  favoritesId String?
+  Album       Album[]
+  Track       Track[]
 }
 
 model Favorites {
-  id      String @id
-  artists String[]
-  albums  String[]
-  tracks  String[]
+  id      String   @id @default(uuid())
+  artists Artist[]
+  albums  Album[]
+  tracks  Track[]
 }

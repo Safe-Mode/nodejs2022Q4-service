@@ -26,21 +26,12 @@ export class AlbumsService {
     return this.prisma.album.update({
       where: { id: uuid },
       data
-    });
+    }).catch(() => null);
   }
 
-  async delete(uuid: string): Promise<Album> {
-    const album = await this.prisma.album.delete({
+  delete(uuid: string): Promise<Album> {
+    return this.prisma.album.delete({
       where: { id: uuid }
-    });
-
-    if (album) {
-      this.prisma.track.updateMany({
-        where: { albumId: album.id },
-        data: { albumId: null }
-      });
-    }
-
-    return album;
+    }).catch(() => null);
   }
 }

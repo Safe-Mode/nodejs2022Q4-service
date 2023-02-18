@@ -22,25 +22,16 @@ export class ArtistsService {
     return this.prisma.artist.create({ data });
   }
 
-  update(uuid: string, data: UpdateArtistDto): Promise<Artist> {
+  update(uuid: string, data: UpdateArtistDto): Promise<Artist | null> {
     return this.prisma.artist.update({
       where: { id: uuid },
       data
-    });
+    }).catch(() => null);
   }
 
-  async delete(uuid: string): Promise<Artist> {
-    const artist = await this.prisma.artist.delete({
+  delete(uuid: string): Promise<Artist> {
+    return this.prisma.artist.delete({
       where: { id: uuid }
-    });
-
-    if (artist) {
-      this.prisma.track.updateMany({
-        where: { artistId: artist.id },
-        data: { artistId: null }
-      });
-    }
-
-    return artist;
+    }).catch(() => null);
   }
 }

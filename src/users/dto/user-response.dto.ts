@@ -1,3 +1,3 @@
-import { User } from "@prisma/client";
+import { User } from "../models/user";
 
 export type UserResponseDto = Omit<User, 'password'>;

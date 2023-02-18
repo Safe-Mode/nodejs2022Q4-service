@@ -17,11 +17,28 @@ export class UsersService {
   getById(id: string): Promise<UserResponseDto> {
     return this.prisma.user.findUnique({
       where: { id }
-    });
+    }).then((user) => ({
+      ...user,
+      createdAt: new Date(user.createdAt).valueOf(),
+      updatedAt: new Date(user.updatedAt).valueOf()
+    })).catch(() => null);
   }
 
   create(data: CreateUserDto): Promise<UserResponseDto> {
-    return this.prisma.user.create({ data });
+    return this.prisma.user.create({
+      select: {
+        id: true,
+        login: true,
+        createdAt: true,
+        updatedAt: true,
+        version: true
+      },
+      data
+    }).then((user) => ({
+      ...user,
+      createdAt: new Date(user.createdAt).valueOf(),
+      updatedAt: new Date(user.updatedAt).valueOf()
+    }));
   }
 
   async update(
@@ -36,7 +53,10 @@ export class UsersService {
       if (user.password === oldPassword) {
         user = await this.prisma.user.update({
           where: { id },
-          data: { password: newPassword }
+          data: {
+            password: newPassword,
+            version: ++user.version
+          }
         });
         delete user.password;
       } else {
@@ -44,12 +64,16 @@ export class UsersService {
       }
     }
 
-    return user;
+    return user ? {
+      ...user,
+      createdAt: new Date(user.createdAt).valueOf(),
+      updatedAt: new Date(user.updatedAt).valueOf()
+    } : null;
   }
 
   delete(id: string): Promise<UserResponseDto> {
     return this.prisma.user.delete({
       where: { id }
-    });
+    }).catch(() => null);
   }
 }

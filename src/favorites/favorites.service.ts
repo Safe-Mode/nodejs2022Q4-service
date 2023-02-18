@@ -4,12 +4,31 @@ import { FavoritesResponseDto } from './dto/favorites-response.dto';
 import { Artist } from 'src/artists/models/artist';
 import { Album } from 'src/albums/models/album';
 import { Track } from 'src/tracks/models/track';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class FavoritesService {
-  constructor(private db: DbService) {}
+  constructor(private db: DbService, private prisma: PrismaService) {}
 
-  getAll(): FavoritesResponseDto {
+  async getAll(): Promise<FavoritesResponseDto> {
+    const favorites = await this.prisma.favorites.findMany({
+      select: {
+        artists: {
+          select: {
+            id: true,
+            name: true,
+            grammy: true
+          }
+        },
+        albums: true,
+        tracks: true
+      }
+    });
+
+    if (!favorites) {
+      return new FavoritesResponseDto();
+    }
+    
     const { artists, albums, tracks } = this.db.getFavorites();
 
     return new FavoritesResponseDto(

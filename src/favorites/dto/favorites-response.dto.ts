@@ -1,6 +1,6 @@
-import { Album } from 'src/albums/models/album';
-import { Artist } from 'src/artists/models/artist';
-import { Track } from 'src/tracks/models/track';
+import { Album } from "src/albums/models/album";
+import { Artist } from "src/artists/models/artist";
+import { Track } from "src/tracks/models/track";
 
 export class FavoritesResponseDto {
   constructor(

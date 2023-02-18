@@ -25,12 +25,12 @@ export class TracksService {
     return this.prisma.track.update({
       where: { id: uuid },
       data
-    });
+    }).catch(() => null);
   }
 
   delete(uuid: string): Promise<Track> {
     return this.prisma.track.delete({
       where: { id: uuid }
-    });
+    }).catch(() => null);
   }
 }
