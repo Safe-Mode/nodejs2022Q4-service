@@ -1,25 +1,23 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
-import { AppDbField, DbService } from 'src/db/db.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ArtistService {
-  constructor(private db: DbService, private prisma: PrismaService) {}
+  private favoritesId = '';
+
+  constructor(private prisma: PrismaService) {
+    this.prisma.favorites.findFirst().then(({ id }) => this.favoritesId = id);
+  }
 
   async addToFavorites(uuid: string) {
-    const artist = await this.prisma.favorites.findUnique({
-      where: {
-        id: uuid
-      }
+    let artist = await this.prisma.artist.findUnique({
+      where: { id: uuid }
     });
 
     if (artist) {
-      const fav = await this.prisma.favorites.create({
-        data: {
-          artists: {
-            create: [artist]
-          }
-        }
+      artist = await this.prisma.artist.update({
+        where: { id: uuid },
+        data: { favoritesId: this.favoritesId }
       });
     } else {
       throw new UnprocessableEntityException();
@@ -29,6 +27,9 @@ export class ArtistService {
   }
 
   deleteFromFavorites(uuid: string) {
-    return this.db.deleteFromFavorites(AppDbField.ARTISTS, uuid);
+    return this.prisma.artist.update({
+      where: { id: uuid },
+      data: { favoritesId: null }
+    });
   }
 }

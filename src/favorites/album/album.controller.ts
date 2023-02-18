@@ -14,13 +14,13 @@ export class AlbumController {
   constructor(private albumService: AlbumService) {}
 
   @Post(':id')
-  addToFavorites(@Param('id', ParseUUIDPipe) id: string): Album {
+  addToFavorites(@Param('id', ParseUUIDPipe) id: string) {
     return this.albumService.addToFavorites(id);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  deleteFromFavorites(@Param('id', ParseUUIDPipe) id: string): string {
+  deleteFromFavorites(@Param('id', ParseUUIDPipe) id: string) {
     return this.albumService.deleteFromFavorites(id);
   }
 }
