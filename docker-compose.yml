@@ -27,7 +27,6 @@ services:
       - ${DB_PORT}:${PGPORT}
     volumes:
       - postgres:/var/lib/postgresql/data
-      - db_logs:/var/lib/postgresql/data/log
     networks:
       - back-tier
     command: postgres -c logging_collector=on -c log_filename=postgres.log
@@ -45,4 +44,3 @@ networks:
 
 volumes:
   postgres:
-  db_logs:
