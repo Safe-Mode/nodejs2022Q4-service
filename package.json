@@ -20,7 +20,11 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "db:migrate": "npx prisma migrate dev --name init",
-    "db:seed": "npx prisma db seed"
+    "db:seed": "npx prisma db seed",
+    "scan:api": "docker scan nodejs2022q4-service-api",
+    "scan:db": "docker scan postgres",
+    "scan:adminer": "docker scan adminer",
+    "compose": "docker compose up --build"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",

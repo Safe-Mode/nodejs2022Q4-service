@@ -5,31 +5,38 @@ services:
     build:
       context: .
     ports:
-      - 4000:4000
+      - ${PORT}:${PORT}
     volumes:
       - ./:/app
       - /app/node_modules
+    depends_on:
+      - db
+    restart: always
     networks:
       - back-tier
     command: npm run start:dev
 
   db:
-    image: postgres
+    image: postgres:alpine
     restart: always
-    env_file:
-      - db.env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
-      - 4001:5432
+      - ${DB_PORT}:${PGPORT}
     volumes:
-      - postgres:/data/db
+      - postgres:/var/lib/postgresql/data
+      - db_logs:/var/lib/postgresql/data/log
     networks:
       - back-tier
+    command: postgres -c logging_collector=on -c log_filename=postgres.log
 
   adminer:
     image: adminer
     restart: always
     ports:
-      - 8080:8080
+      - ${ADMINER_PORT}:${ADMINER_PORT}
     networks:
       - back-tier
 
@@ -38,3 +45,4 @@ networks:
 
 volumes:
   postgres:
+  db_logs:
