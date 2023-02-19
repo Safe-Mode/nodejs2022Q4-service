@@ -51,6 +51,10 @@ npm run scan:db
 npm run scan:adminer
 ```
 
+## PostgreSQL & ORM
+
+You can inspect database in browser through Adminer - http://localhost:8080
+
 ## Testing
 
 After application running open new terminal and enter:
