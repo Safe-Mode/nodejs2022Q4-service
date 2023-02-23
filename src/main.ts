@@ -6,6 +6,7 @@ import { join } from 'node:path';
 import { env } from 'process';
 
 import { AppModule } from './app.module';
+import { LoggingService } from './logging/logging.service';
 import { NotFoundInterceptor } from './shared/interceptors/not-found.interceptor';
 import { setHeaders } from './shared/middlewares/headers.middleware';
 
@@ -17,6 +18,7 @@ async function bootstrap() {
   app.use(setHeaders);
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useGlobalInterceptors(new NotFoundInterceptor());
+  app.useLogger(app.get(LoggingService));
   await app.listen(env.PORT);
 }
 bootstrap();
