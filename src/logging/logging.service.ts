@@ -35,4 +35,12 @@ export class LoggingService extends ConsoleLogger {
   verbose(message: any, ...optionalParams: any[]) {
     super.verbose(message);
   }
+
+  static objectToString(object: unknown): string {
+    return Object.keys(object).reduce(
+        (result, param, index) =>
+            `${result}${param}: ${object[param]}${Object.keys(object).length - 1 === index ? ' }' : ', '}`,
+        '{ '
+    );
+  }
 }
