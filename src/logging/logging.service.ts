@@ -1,14 +1,14 @@
 import { ConsoleLogger } from '@nestjs/common';
 import { LogLevel } from '@nestjs/common/services/logger.service';
 import { env } from 'node:process';
-import { LOG_LEVELS, MAX_LOG_LEVEL } from 'src/app.const';
+import { DEFAULT_LOG_LEVEL, LOG_LEVELS, MAX_LOG_LEVEL } from 'src/app.const';
 
 export class LoggingService extends ConsoleLogger {
   constructor(context?: string) {
     super(context);
     
     this.setLogLevels(
-      LoggingService.getLogLevel(env.LOG_LEVEL)
+      LoggingService.getLogLevel((env.LOG_LEVEL ?? DEFAULT_LOG_LEVEL) as string)
     );
   }
   /**

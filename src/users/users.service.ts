@@ -24,9 +24,9 @@ export class UsersService {
     })).catch(() => null);
   }
 
-  getByName(username: string): Promise<User> {
+  getByName(login: string): Promise<User> {
     return this.prisma.user.findFirst({
-      where: { login: username }
+      where: { login }
     }).catch(() => null);
   }
 
