@@ -20,6 +20,6 @@ import { RefreshStrategy } from './strategies/refresh.strategy';
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy, RefreshStrategy],
-  exports: [AuthService]
+  exports: [AuthService],
 })
 export class AuthModule {}

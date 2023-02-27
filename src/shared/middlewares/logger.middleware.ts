@@ -8,7 +8,7 @@ export class LoggerMiddleware implements NestMiddleware {
 
   use(req: Request, res: Response, next: NextFunction) {
     res.on('finish', () => {
-        this.logger.log(`Logging HTTP request:
+      this.logger.log(`Logging HTTP request:
 - type: ${req.method}
 - url: ${req.url}
 - query: ${LoggingService.objectToString(req.query)}
@@ -19,4 +19,3 @@ export class LoggerMiddleware implements NestMiddleware {
     next();
   }
 }
-

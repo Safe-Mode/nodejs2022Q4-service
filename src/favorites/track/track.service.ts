@@ -8,18 +8,18 @@ export class TrackService {
   private favoritesId = '';
 
   constructor(private prisma: PrismaService) {
-    this.prisma.favorites.findFirst().then(({ id }) => this.favoritesId = id);
+    this.prisma.favorites.findFirst().then(({ id }) => (this.favoritesId = id));
   }
 
   async addToFavorites(uuid: string) {
     let track = await this.prisma.track.findUnique({
-      where: { id: uuid }
+      where: { id: uuid },
     });
 
     if (track) {
       track = await this.prisma.track.update({
         where: { id: uuid },
-        data: { favoritesId: this.favoritesId }
+        data: { favoritesId: this.favoritesId },
       });
     } else {
       throw new UnprocessableEntityException();
@@ -31,7 +31,7 @@ export class TrackService {
   deleteFromFavorites(uuid: string) {
     return this.prisma.track.update({
       where: { id: uuid },
-      data: { favoritesId: null }
+      data: { favoritesId: null },
     });
   }
 }

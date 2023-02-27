@@ -6,9 +6,11 @@ import { DEFAULT_LOG_LEVEL, LOG_LEVELS, MAX_LOG_LEVEL } from 'src/app.const';
 export class LoggingService extends ConsoleLogger {
   constructor(context?: string) {
     super(context);
-    
+
     this.setLogLevels(
-      LoggingService.getLogLevel((env.LOG_LEVEL ?? DEFAULT_LOG_LEVEL) as string)
+      LoggingService.getLogLevel(
+        (env.LOG_LEVEL ?? DEFAULT_LOG_LEVEL) as string,
+      ),
     );
   }
   /**
@@ -48,9 +50,11 @@ export class LoggingService extends ConsoleLogger {
 
   static objectToString(object: unknown): string {
     return Object.keys(object).reduce(
-        (result, param, index) =>
-            `${result}${param}: ${object[param]}${Object.keys(object).length - 1 === index ? ' }' : ', '}`,
-        '{ '
+      (result, param, index) =>
+        `${result}${param}: ${object[param]}${
+          Object.keys(object).length - 1 === index ? ' }' : ', '
+        }`,
+      '{ ',
     );
   }
 

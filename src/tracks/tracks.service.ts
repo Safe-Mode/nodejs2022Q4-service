@@ -13,7 +13,7 @@ export class TracksService {
 
   getById(uuid: string): Promise<Track> {
     return this.prisma.track.findUnique({
-      where: { id: uuid }
+      where: { id: uuid },
     });
   }
 
@@ -22,15 +22,19 @@ export class TracksService {
   }
 
   update(uuid: string, data: Partial<CreateTrackDto>): Promise<Track> {
-    return this.prisma.track.update({
-      where: { id: uuid },
-      data
-    }).catch(() => null);
+    return this.prisma.track
+      .update({
+        where: { id: uuid },
+        data,
+      })
+      .catch(() => null);
   }
 
   delete(uuid: string): Promise<Track> {
-    return this.prisma.track.delete({
-      where: { id: uuid }
-    }).catch(() => null);
+    return this.prisma.track
+      .delete({
+        where: { id: uuid },
+      })
+      .catch(() => null);
   }
 }

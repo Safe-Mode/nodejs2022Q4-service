@@ -14,7 +14,7 @@ export class AlbumsService {
 
   getById(uuid: string): Promise<Album> {
     return this.prisma.album.findUnique({
-      where: { id: uuid }
+      where: { id: uuid },
     });
   }
 
@@ -23,15 +23,19 @@ export class AlbumsService {
   }
 
   update(uuid: string, data: UpdateAlbumDto): Promise<Album> {
-    return this.prisma.album.update({
-      where: { id: uuid },
-      data
-    }).catch(() => null);
+    return this.prisma.album
+      .update({
+        where: { id: uuid },
+        data,
+      })
+      .catch(() => null);
   }
 
   delete(uuid: string): Promise<Album> {
-    return this.prisma.album.delete({
-      where: { id: uuid }
-    }).catch(() => null);
+    return this.prisma.album
+      .delete({
+        where: { id: uuid },
+      })
+      .catch(() => null);
   }
 }

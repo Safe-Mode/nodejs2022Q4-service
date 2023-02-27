@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UserResponseDto } from 'src/users/dto/user-response.dto';
@@ -13,22 +17,25 @@ import { GetTokensResponse } from './types/get-tokens-response.interface';
 export class AuthService {
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
   ) {}
 
-  async validateUser(login: string, password: string): Promise<UserResponseDto> {
+  async validateUser(
+    login: string,
+    password: string,
+  ): Promise<UserResponseDto> {
     const user = await this.usersService.getByName(login);
 
-    if (user && await argon2.verify(user.password, password)) {
+    if (user && (await argon2.verify(user.password, password))) {
       const { password, ...result } = user;
 
       return {
         ...result,
         createdAt: new Date(result.createdAt).valueOf(),
-        updatedAt: new Date(result.updatedAt).valueOf()
+        updatedAt: new Date(result.updatedAt).valueOf(),
       };
     }
-    
+
     return null;
   }
 
@@ -36,7 +43,7 @@ export class AuthService {
     const hash = await AuthService.hashData(password);
     const createdUser = await this.usersService.create({
       login,
-      password: hash
+      password: hash,
     });
     const tokens = await this.getTokens(createdUser.id, createdUser.login);
 
@@ -50,11 +57,11 @@ export class AuthService {
     const tokens = await this.getTokens(user.id, user.login);
 
     await this.updateRefreshToken(user.id, tokens.refreshToken);
-    
+
     return {
       id: user.id,
       accessToken: this.jwtService.sign(payload),
-      refreshToken: tokens.refreshToken
+      refreshToken: tokens.refreshToken,
     };
   }
 
@@ -62,7 +69,7 @@ export class AuthService {
     if (!refreshToken) {
       throw new UnauthorizedException('No refresh token was provided');
     }
-    
+
     const user = await this.usersService.getById(userId);
 
     if (!user || !user.refreshToken) {
@@ -71,7 +78,7 @@ export class AuthService {
 
     const refreshTokenMatches = await argon2.verify(
       user.refreshToken,
-      refreshToken
+      refreshToken,
     );
 
     if (!refreshTokenMatches) {
@@ -114,7 +121,10 @@ export class AuthService {
     };
   }
 
-  async updateRefreshToken(userId: string, refreshToken: string): Promise<void> {
+  async updateRefreshToken(
+    userId: string,
+    refreshToken: string,
+  ): Promise<void> {
     const hashedRefreshToken = await AuthService.hashData(refreshToken);
     this.usersService.refresh(userId, hashedRefreshToken);
   }

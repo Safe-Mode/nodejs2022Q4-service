@@ -22,7 +22,7 @@ import { UsersModule } from './users/users.module';
     AlbumsModule,
     FavoritesModule,
     LoggingModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [
@@ -30,7 +30,7 @@ import { UsersModule } from './users/users.module';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
-    }
+    },
   ],
 })
 export class AppModule {

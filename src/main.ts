@@ -22,17 +22,17 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter(new LoggingService()));
   app.useLogger(app.get(LoggingService));
   await app.listen(env.PORT);
-  
-  process.on('uncaughtException', err => {
+
+  process.on('uncaughtException', (err) => {
     app.get(LoggingService).error(`Uncaught Exception: ${err.message}`);
-    process.exit(1)
+    process.exit(1);
   });
 
   process.on('unhandledRejection', (reason, promise) => {
-    app.get(LoggingService).error('Unhandled rejection at ', promise, `reason: ${reason}`);
-    process.exit(1)
+    app
+      .get(LoggingService)
+      .error('Unhandled rejection at ', promise, `reason: ${reason}`);
+    process.exit(1);
   });
 }
 bootstrap();
-
-

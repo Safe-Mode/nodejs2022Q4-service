@@ -7,8 +7,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class FavoritesService {
-  constructor(private prisma: PrismaService) {
-  }
+  constructor(private prisma: PrismaService) {}
 
   async getAll() {
     const [favorite] = await this.prisma.favorites.findMany({
@@ -17,16 +16,16 @@ export class FavoritesService {
           select: {
             id: true,
             name: true,
-            grammy: true
-          }
+            grammy: true,
+          },
         },
         albums: {
           select: {
             id: true,
             name: true,
             year: true,
-            artistId: true
-          }
+            artistId: true,
+          },
         },
         tracks: {
           select: {
@@ -34,10 +33,10 @@ export class FavoritesService {
             name: true,
             duration: true,
             artistId: true,
-            albumId: true
-          }
-        }
-      }
+            albumId: true,
+          },
+        },
+      },
     });
 
     return favorite ?? new FavoritesResponseDto();
