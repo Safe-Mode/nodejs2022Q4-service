@@ -1,5 +1,5 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
-import { Album } from 'src/albums/models/album';
+import { Album } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class AlbumService {
     this.prisma.favorites.findFirst().then(({ id }) => (this.favoritesId = id));
   }
 
-  async addToFavorites(uuid: string) {
+  async addToFavorites(uuid: string): Promise<Album> {
     let album = await this.prisma.album.findUnique({
       where: { id: uuid },
     });
@@ -27,7 +27,7 @@ export class AlbumService {
     return album;
   }
 
-  deleteFromFavorites(uuid: string) {
+  deleteFromFavorites(uuid: string): Promise<Album> {
     return this.prisma.album.update({
       where: { id: uuid },
       data: { favoritesId: null },

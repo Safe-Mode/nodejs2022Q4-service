@@ -31,7 +31,7 @@ async function bootstrap() {
   process.on('unhandledRejection', (reason, promise) => {
     app
       .get(LoggingService)
-      .error('Unhandled rejection at ', promise, `reason: ${reason}`);
+      .error(`Unhandled rejection at ${promise}, reason: ${reason}`);
     process.exit(1);
   });
 }

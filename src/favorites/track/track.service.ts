@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UnprocessableEntityException } from '@nestjs/common/exceptions';
+import { Track } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Track } from 'src/tracks/models/track';
 
 @Injectable()
 export class TrackService {
@@ -11,7 +11,7 @@ export class TrackService {
     this.prisma.favorites.findFirst().then(({ id }) => (this.favoritesId = id));
   }
 
-  async addToFavorites(uuid: string) {
+  async addToFavorites(uuid: string): Promise<Track> {
     let track = await this.prisma.track.findUnique({
       where: { id: uuid },
     });
@@ -28,7 +28,7 @@ export class TrackService {
     return track;
   }
 
-  deleteFromFavorites(uuid: string) {
+  deleteFromFavorites(uuid: string): Promise<Track> {
     return this.prisma.track.update({
       where: { id: uuid },
       data: { favoritesId: null },

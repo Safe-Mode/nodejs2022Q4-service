@@ -16,35 +16,35 @@ export class LoggingService extends ConsoleLogger {
   /**
    * Write a 'log' level log.
    */
-  log(message: any, ...optionalParams: any[]) {
+  log(message: any) {
     super.log(message);
   }
 
   /**
    * Write an 'error' level log.
    */
-  error(message: any, ...optionalParams: any[]) {
+  error(message: any) {
     super.error(message);
   }
 
   /**
    * Write a 'warn' level log.
    */
-  warn(message: any, ...optionalParams: any[]) {
+  warn(message: any) {
     super.warn(message);
   }
 
   /**
    * Write a 'debug' level log.
    */
-  debug(message: any, ...optionalParams: any[]) {
+  debug(message: any) {
     super.warn(message);
   }
 
   /**
    * Write a 'verbose' level log.
    */
-  verbose(message: any, ...optionalParams: any[]) {
+  verbose(message: any) {
     super.verbose(message);
   }
 
