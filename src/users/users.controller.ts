@@ -9,10 +9,10 @@ import {
   Delete,
   HttpCode,
 } from '@nestjs/common';
+import { User } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { UserResponseDto } from './dto/user-response.dto';
-import { User } from './models/user';
 import { UsersService } from './users.service';
 
 @Controller('user')
@@ -20,17 +20,17 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get()
-  getAll(): User[] {
+  getAll(): Promise<User[]> {
     return this.usersService.getAll();
   }
 
   @Get(':id')
-  getById(@Param('id', ParseUUIDPipe) id: string): User {
+  getById(@Param('id', ParseUUIDPipe) id: string): Promise<UserResponseDto> {
     return this.usersService.getById(id);
   }
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto): UserResponseDto {
+  create(@Body() createUserDto: CreateUserDto): Promise<UserResponseDto> {
     return this.usersService.create(createUserDto);
   }
 
@@ -38,13 +38,13 @@ export class UsersController {
   updatePassword(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() data: UpdatePasswordDto,
-  ): UserResponseDto {
+  ): Promise<UserResponseDto> {
     return this.usersService.update(id, data);
   }
 
   @Delete(':id')
   @HttpCode(204)
-  delete(@Param('id', ParseUUIDPipe) id: string): User {
+  delete(@Param('id', ParseUUIDPipe) id: string): Promise<UserResponseDto> {
     return this.usersService.delete(id);
   }
 }

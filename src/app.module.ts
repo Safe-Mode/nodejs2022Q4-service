@@ -5,11 +5,13 @@ import { AppService } from './app.service';
 import { ArtistsModule } from './artists/artists.module';
 import { DbModule } from './db/db.module';
 import { FavoritesModule } from './favorites/favorites.module';
+import { PrismaModule } from './prisma/prisma.module';
 import { TracksModule } from './tracks/tracks.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
+    PrismaModule,
     DbModule,
     UsersModule,
     TracksModule,

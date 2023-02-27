@@ -19,6 +19,8 @@ npm install
 
 ## Running application
 
+Before running app cope file ```.env.example``` and rename it's copy to ```.env```
+
 ```
 npm start
 ```
@@ -26,6 +28,32 @@ npm start
 After starting the app on port (4000 as default) you can open
 in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
 For more information about OpenAPI/Swagger please visit https://swagger.io/.
+
+## Containerization, Docker
+
+Install <a href="https://docs.docker.com/get-docker/">Docker</a><br/>
+
+To start application in development container
+
+```
+npm run compose
+```
+
+To scan for images for vulnerabilities api/db/adminer
+
+```
+npm run scan:api
+```
+```
+npm run scan:db
+```
+```
+npm run scan:adminer
+```
+
+## PostgreSQL & ORM
+
+You can inspect database in browser through Adminer - http://localhost:8080
 
 ## Testing
 

@@ -8,7 +8,7 @@ export class FavoritesController {
   constructor(private favsService: FavoritesService) {}
 
   @Get()
-  getAll(): FavoritesResponseDto {
+  getAll() {
     return this.favsService.getAll();
   }
 }

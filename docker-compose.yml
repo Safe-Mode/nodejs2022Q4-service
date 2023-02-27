@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    depends_on:
+      - db
+    restart: always
+    networks:
+      - back-tier
+    command: npm run start:dev
+
+  db:
+    image: postgres:alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - ${DB_PORT}:${PGPORT}
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - back-tier
+    command: postgres -c logging_collector=on -c log_filename=postgres.log
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - ${ADMINER_PORT}:${ADMINER_PORT}
+    networks:
+      - back-tier
+
+networks:
+  back-tier:
+
+volumes:
+  postgres:

@@ -37,7 +37,7 @@ export class DbService {
     return (this[fieldName] as Entity[]).find((entity) => entity.id === id);
   }
 
-  createUser({ login, password }: CreateUserDto): UserResponseDto {
+  createUser({ login, password }: CreateUserDto): Omit<User, 'password'> {
     const user = new User(login, password);
     this.users.push(user);
 
