@@ -10,6 +10,7 @@ export class User {
   constructor(
     public readonly login: string,
     public password: string,
+    public refreshToken?: string,
     private uuid: typeof uuidv4 = uuidv4,
   ) {
     this.id = this.uuid();

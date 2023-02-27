@@ -37,7 +37,7 @@ export class UsersService {
         login: true,
         createdAt: true,
         updatedAt: true,
-        version: true
+        version: true,
       },
       data
     }).then((user) => ({
@@ -75,6 +75,13 @@ export class UsersService {
       createdAt: new Date(user.createdAt).valueOf(),
       updatedAt: new Date(user.updatedAt).valueOf()
     } : null;
+  }
+
+  async refresh(id: string, refreshToken: string): Promise<void> {
+    await this.prisma.user.update({
+      where: { id },
+      data: { refreshToken }
+    });
   }
 
   delete(id: string): Promise<UserResponseDto> {
