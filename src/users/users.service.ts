@@ -5,7 +5,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { UserResponseDto } from './dto/user-response.dto';
 
-
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
@@ -15,30 +14,43 @@ export class UsersService {
   }
 
   getById(id: string): Promise<UserResponseDto> {
-    return this.prisma.user.findUnique({
-      where: { id }
-    }).then((user) => ({
-      ...user,
-      createdAt: new Date(user.createdAt).valueOf(),
-      updatedAt: new Date(user.updatedAt).valueOf()
-    })).catch(() => null);
+    return this.prisma.user
+      .findUnique({
+        where: { id },
+      })
+      .then((user) => ({
+        ...user,
+        createdAt: new Date(user.createdAt).valueOf(),
+        updatedAt: new Date(user.updatedAt).valueOf(),
+      }))
+      .catch(() => null);
+  }
+
+  getByName(login: string): Promise<User> {
+    return this.prisma.user
+      .findFirst({
+        where: { login },
+      })
+      .catch(() => null);
   }
 
   create(data: CreateUserDto): Promise<UserResponseDto> {
-    return this.prisma.user.create({
-      select: {
-        id: true,
-        login: true,
-        createdAt: true,
-        updatedAt: true,
-        version: true
-      },
-      data
-    }).then((user) => ({
-      ...user,
-      createdAt: new Date(user.createdAt).valueOf(),
-      updatedAt: new Date(user.updatedAt).valueOf()
-    }));
+    return this.prisma.user
+      .create({
+        select: {
+          id: true,
+          login: true,
+          createdAt: true,
+          updatedAt: true,
+          version: true,
+        },
+        data,
+      })
+      .then((user) => ({
+        ...user,
+        createdAt: new Date(user.createdAt).valueOf(),
+        updatedAt: new Date(user.updatedAt).valueOf(),
+      }));
   }
 
   async update(
@@ -46,7 +58,7 @@ export class UsersService {
     { oldPassword, newPassword }: UpdatePasswordDto,
   ): Promise<UserResponseDto> {
     let user = await this.prisma.user.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (user) {
@@ -55,8 +67,8 @@ export class UsersService {
           where: { id },
           data: {
             password: newPassword,
-            version: ++user.version
-          }
+            version: ++user.version,
+          },
         });
         delete user.password;
       } else {
@@ -64,16 +76,27 @@ export class UsersService {
       }
     }
 
-    return user ? {
-      ...user,
-      createdAt: new Date(user.createdAt).valueOf(),
-      updatedAt: new Date(user.updatedAt).valueOf()
-    } : null;
+    return user
+      ? {
+          ...user,
+          createdAt: new Date(user.createdAt).valueOf(),
+          updatedAt: new Date(user.updatedAt).valueOf(),
+        }
+      : null;
+  }
+
+  async refresh(id: string, refreshToken: string): Promise<void> {
+    await this.prisma.user.update({
+      where: { id },
+      data: { refreshToken },
+    });
   }
 
   delete(id: string): Promise<UserResponseDto> {
-    return this.prisma.user.delete({
-      where: { id }
-    }).catch(() => null);
+    return this.prisma.user
+      .delete({
+        where: { id },
+      })
+      .catch(() => null);
   }
 }

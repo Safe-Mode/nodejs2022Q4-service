@@ -14,7 +14,7 @@ export class ArtistsService {
 
   getById(uuid: string): Promise<Artist> {
     return this.prisma.artist.findUnique({
-      where: { id: uuid }
+      where: { id: uuid },
     });
   }
 
@@ -23,15 +23,19 @@ export class ArtistsService {
   }
 
   update(uuid: string, data: UpdateArtistDto): Promise<Artist | null> {
-    return this.prisma.artist.update({
-      where: { id: uuid },
-      data
-    }).catch(() => null);
+    return this.prisma.artist
+      .update({
+        where: { id: uuid },
+        data,
+      })
+      .catch(() => null);
   }
 
   delete(uuid: string): Promise<Artist> {
-    return this.prisma.artist.delete({
-      where: { id: uuid }
-    }).catch(() => null);
+    return this.prisma.artist
+      .delete({
+        where: { id: uuid },
+      })
+      .catch(() => null);
   }
 }

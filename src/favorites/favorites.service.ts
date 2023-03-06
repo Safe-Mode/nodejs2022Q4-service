@@ -1,32 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { FavoritesResponseDto } from './dto/favorites-response.dto';
-import { Artist } from 'src/artists/models/artist';
-import { Album } from 'src/albums/models/album';
-import { Track } from 'src/tracks/models/track';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { FavoritesResponseDto } from './dto/favorites-response.dto';
 
 @Injectable()
 export class FavoritesService {
-  constructor(private prisma: PrismaService) {
-  }
+  constructor(private prisma: PrismaService) {}
 
-  async getAll() {
+  async getAll(): Promise<FavoritesResponseDto> {
     const [favorite] = await this.prisma.favorites.findMany({
       select: {
         artists: {
           select: {
             id: true,
             name: true,
-            grammy: true
-          }
+            grammy: true,
+          },
         },
         albums: {
           select: {
             id: true,
             name: true,
             year: true,
-            artistId: true
-          }
+            artistId: true,
+          },
         },
         tracks: {
           select: {
@@ -34,10 +30,10 @@ export class FavoritesService {
             name: true,
             duration: true,
             artistId: true,
-            albumId: true
-          }
-        }
-      }
+            albumId: true,
+          },
+        },
+      },
     });
 
     return favorite ?? new FavoritesResponseDto();
